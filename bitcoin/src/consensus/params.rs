@@ -48,6 +48,8 @@ pub struct Params {
     pub no_pow_retargeting: bool,
 }
 
+//Note: XBT does not have BIP65 or BIP66 activated, but we set them to 8460 to avoid issues
+
 impl Params {
     /// Creates parameters set for the given network.
     pub fn new(network: Network) -> Self {
@@ -56,11 +58,11 @@ impl Params {
                 network: Network::Bitcoin,
                 bip16_time: 1333238400,                 // Apr 1 2012
 
-                //https://github.com/LuckyCoinProj/luckycoinV3/blob/master/src/chainparams.cpp see ln 87
+                //https://github.com/Bitcoinclassicxbt/classic2/blob/main/src/chainparams.cpp line 77
 
-                bip34_height: 0, // 
-                bip65_height:  8460, // 
-                bip66_height:  8460, // 
+                bip34_height: 8460, // 
+                bip65_height:  8460, //not enabled?
+                bip66_height:  8460, //not enabled?
                 rule_change_activation_threshold: 9576, // 95%
                 miner_confirmation_window: 10080,
                 pow_limit: Target::MAX_ATTAINABLE_MAINNET,
@@ -72,7 +74,7 @@ impl Params {
             Network::Testnet => Params {
                 network: Network::Testnet,
                 bip16_time: 1333238400,                 // Apr 1 2012
-                bip34_height: 0, // 0000000023b3a96d3484e5abb3755c413e7d41500f8e2a5c3f0dd01299cd8ef8
+                bip34_height: 21111, // https://github.com/Bitcoinclassicxbt/classic2/blob/main/src/chainparams.cpp line 182
                 bip65_height: 8460, // 00000000007f6655f22f98e72ed80d8b06dc761d5da09df0fa1dc4be4f861eb6
                 bip66_height: 8460, // 000000002104c8c45e99a8853285a3b592602a3ccde2b832481da85e9e4ba182
                 rule_change_activation_threshold: 2880, // 75%
@@ -80,16 +82,19 @@ impl Params {
                 pow_limit: Target::MAX_ATTAINABLE_TESTNET,
                 pow_target_spacing: 60,            // 1 minutes.
 
-                //https://github.com/LuckyCoinProj/luckycoinV3/blob/master/src/chainparams.cpp see ln 93
+                //https://github.com/LuckyCoinProj/xbtV3/blob/master/src/chainparams.cpp see ln 93
 
                 pow_target_timespan: 20 * 60, // 4 hours.
                 allow_min_difficulty_blocks: true,
                 no_pow_retargeting: false,
             },
+
+
+            //none of these exist in XBT
             Network::Signet => Params {
                 network: Network::Signet,
                 bip16_time: 1333238400, // Apr 1 2012
-                bip34_height: 0,
+                bip34_height: 8460,
                 bip65_height: 8460,
                 bip66_height: 8460,
                 rule_change_activation_threshold: 1916, // 95%
@@ -103,7 +108,7 @@ impl Params {
             Network::Regtest => Params {
                 network: Network::Regtest,
                 bip16_time: 1333238400,  // Apr 1 2012
-                bip34_height: 0, // not activated on regtest
+                bip34_height: 8460, // not activated on regtest
                 bip65_height: 8460,
                 bip66_height: 8460,                    // used only in rpc tests
                 rule_change_activation_threshold: 108, // 75%

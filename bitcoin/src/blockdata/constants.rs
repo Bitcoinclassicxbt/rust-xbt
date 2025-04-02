@@ -44,15 +44,15 @@ pub const WITNESS_SCALE_FACTOR: usize = 4;
 /// The maximum allowed number of signature check operations in a block.
 pub const MAX_BLOCK_SIGOPS_COST: i64 = 80_000;
 /// Mainnet (bitcoin) pubkey address prefix.
-pub const PUBKEY_ADDRESS_PREFIX_MAIN: u8 = 47;
+pub const PUBKEY_ADDRESS_PREFIX_MAIN: u8 = 0;
 /// Mainnet (bitcoin) script address prefix.
 pub const SCRIPT_ADDRESS_PREFIX_MAIN: u8 = 5;
 /// Test (signet, regtest) pubkey address prefix.
-pub const PUBKEY_ADDRESS_PREFIX_TEST: u8 = 47; // 0x71
+pub const PUBKEY_ADDRESS_PREFIX_TEST: u8 = 113; // 0x71
 /// Test (tesnet, signet, regtest) script address prefix.
-pub const SCRIPT_ADDRESS_PREFIX_TEST: u8 = 5; // 0xc4
-// Regtest (luckycoincoin) pubkey address prefix.
-pub const PUBKEY_ADDRESS_PREFIX_REGTEST: u8 = 47; // 0x6f
+pub const SCRIPT_ADDRESS_PREFIX_TEST: u8 = 196; // 0xc4
+/// Regtest (xbt) pubkey address prefix.
+pub const PUBKEY_ADDRESS_PREFIX_REGTEST: u8 = 111; // 0x6f
 /// The maximum allowed script size.
 pub const MAX_SCRIPT_ELEMENT_SIZE: usize = 520;
 /// How may blocks between halvings.
@@ -98,7 +98,7 @@ fn bitcoin_genesis_tx() -> Transaction {
 /// Constructs and returns the genesis block.
 pub fn genesis_block(network: Network) -> Block {
     let txdata = vec![bitcoin_genesis_tx()];
-    let hash: sha256d::Hash = sha256d::Hash::from_slice(&hex!("6f80efd038566e1e3eab3e1d38131604d06481e77f2462235c6a9a94b1f8abf9")).unwrap();
+    let hash: sha256d::Hash = txdata[0].txid().into();
     let merkle_root = hash.into();
     match network {
         Network::Bitcoin => Block {
@@ -106,9 +106,9 @@ pub fn genesis_block(network: Network) -> Block {
                 version: block::Version::ONE,
                 prev_blockhash: Hash::all_zeros(),
                 merkle_root,
-                time: 1369199888,
-                bits: CompactTarget::from_consensus(0x1e0ffff0),
-                nonce: 11288888,
+                time: 1231006505,
+                bits: CompactTarget::from_consensus(0x1d00ffff),
+                nonce: 2083236893,
                 aux_data: None,
             },
             txdata,
@@ -118,9 +118,9 @@ pub fn genesis_block(network: Network) -> Block {
                 version: block::Version::ONE,
                 prev_blockhash: Hash::all_zeros(),
                 merkle_root,
-                time: 1369199888,
-                bits: CompactTarget::from_consensus(0x1e0ffff0),
-                nonce: 11288888,
+                time: 1296688602,
+                bits: CompactTarget::from_consensus(0x1d00ffff),
+                nonce: 414098458,
                 aux_data: None,
             },
             txdata,
@@ -130,9 +130,9 @@ pub fn genesis_block(network: Network) -> Block {
                 version: block::Version::ONE,
                 prev_blockhash: Hash::all_zeros(),
                 merkle_root,
-                time: 1369199888,
-                bits: CompactTarget::from_consensus(0x1e0ffff0),
-                nonce: 11288888,
+                time: 1231006505,
+                bits: CompactTarget::from_consensus(0x1d00ffff),
+                nonce: 414098458,
                 aux_data: None,
             },
             txdata,
@@ -142,9 +142,9 @@ pub fn genesis_block(network: Network) -> Block {
                 version: block::Version::ONE,
                 prev_blockhash: Hash::all_zeros(),
                 merkle_root,
-                time: 1369199888,
-                bits: CompactTarget::from_consensus(0x1e0ffff0),
-                nonce: 11288888,
+                time: 1231006505,
+                bits: CompactTarget::from_consensus(0x1d00ffff),
+                nonce: 414098458,
                 aux_data: None,
             },
             txdata,
@@ -163,15 +163,15 @@ impl ChainHash {
     //https://bitcoin.stackexchange.com/questions/74358/what-is-bitcoins-genesis-hash
     /// `ChainHash` for mainnet bitcoin.
 
-    //Luckycoin as no test networks, so all of em are set to mainnet
+    //Xbt as no test networks, so all of em are set to mainnet
 
-    pub const BITCOIN: Self = Self([27, 84, 81, 229, 169, 79, 203, 67, 48, 141, 29, 89, 244, 50, 250, 145, 36, 196, 19, 104, 88, 24, 251, 59, 182, 98, 144, 153, 88, 206, 123, 155]);
+    pub const BITCOIN: Self = Self([111, 226, 140, 10, 182, 241, 179, 114, 193, 166, 162, 70, 174, 99, 247, 79, 147, 30, 131, 101, 225, 90, 8, 156, 104, 214, 25, 0, 0, 0, 0, 0]);
     /// `ChainHash` for testnet bitcoin.
-    pub const TESTNET: Self = Self([27, 84, 81, 229, 169, 79, 203, 67, 48, 141, 29, 89, 244, 50, 250, 145, 36, 196, 19, 104, 88, 24, 251, 59, 182, 98, 144, 153, 88, 206, 123, 155]);
+    pub const TESTNET: Self = Self([67, 73, 127, 215, 248, 38, 149, 113, 8, 244, 163, 15, 217, 206, 195, 174, 186, 121, 151, 32, 132, 233, 14, 173, 1, 234, 51, 9, 0, 0, 0, 0]);
     /// `ChainHash` for signet bitcoin.
-    pub const SIGNET: Self = Self([27, 84, 81, 229, 169, 79, 203, 67, 48, 141, 29, 89, 244, 50, 250, 145, 36, 196, 19, 104, 88, 24, 251, 59, 182, 98, 144, 153, 88, 206, 123, 155]);
+    pub const SIGNET: Self = Self([111, 226, 140, 10, 182, 241, 179, 114, 193, 166, 162, 70, 174, 99, 247, 79, 147, 30, 131, 101, 225, 90, 8, 156, 104, 214, 25, 0, 0, 0, 0, 0]);
     /// `ChainHash` for regtest bitcoin.
-    pub const REGTEST: Self = Self([27, 84, 81, 229, 169, 79, 203, 67, 48, 141, 29, 89, 244, 50, 250, 145, 36, 196, 19, 104, 88, 24, 251, 59, 182, 98, 144, 153, 88, 206, 123, 155]);
+    pub const REGTEST: Self = Self([111, 226, 140, 10, 182, 241, 179, 114, 193, 166, 162, 70, 174, 99, 247, 79, 147, 30, 131, 101, 225, 90, 8, 156, 104, 214, 25, 0, 0, 0, 0, 0]);
 
     /// Returns the hash of the `network` genesis block for use as a chain hash.
     ///
