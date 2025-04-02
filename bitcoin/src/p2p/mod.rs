@@ -207,13 +207,13 @@ impl Magic {
     /// Bitcoin mainnet network magic bytes.
     /// 
     /// 0xd2, 0xb9, 0xba, 0xf9
-    pub const BITCOIN: Self = Self([0xF9, 0xBA, 0xB9, 0xD2]);
+    pub const BITCOIN: Self = Self([0xf6, 0xba, 0xb9, 0xd3]);
     /// Bitcoin testnet network magic bytes.
-    pub const TESTNET: Self = Self([0xF9, 0xBA, 0xB9, 0xD2]);
+    pub const TESTNET: Self = Self([0xf6, 0xba, 0xb9, 0xd3]);
     /// Bitcoin signet network magic bytes.
-    pub const SIGNET: Self = Self([0xF9, 0xBA, 0xB9, 0xD2]);
+    pub const SIGNET: Self = Self([0xf6, 0xba, 0xb9, 0xd3]);
     /// Bitcoin regtest network magic bytes.
-    pub const REGTEST: Self = Self([0xF9, 0xBA, 0xB9, 0xD2]);
+    pub const REGTEST: Self = Self([0xf6, 0xba, 0xb9, 0xd3]);
 
     /// Create network magic from bytes.
     pub fn from_bytes(bytes: [u8; 4]) -> Magic { Magic(bytes) }
