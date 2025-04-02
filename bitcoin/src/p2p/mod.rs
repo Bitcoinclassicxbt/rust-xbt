@@ -205,13 +205,15 @@ pub struct Magic(pub [u8; 4]);
 
 impl Magic {
     /// Bitcoin mainnet network magic bytes.
-    pub const BITCOIN: Self = Self([0xF9, 0xBA, 0xB9, 0xD2]);
+    /// 
+    /// 0xd2, 0xb9, 0xba, 0xf9
+    pub const BITCOIN: Self = Self([0xd2, 0xb9, 0xba, 0xf9]);
     /// Bitcoin testnet network magic bytes.
-    pub const TESTNET: Self = Self([0xF9, 0xBA, 0xB9, 0xD2]);
+    pub const TESTNET: Self = Self([0xd2, 0xb9, 0xba, 0xf9]);
     /// Bitcoin signet network magic bytes.
-    pub const SIGNET: Self = Self([0xF9, 0xBA, 0xB9, 0xD2]);
+    pub const SIGNET: Self = Self([0xd2, 0xb9, 0xba, 0xf9]);
     /// Bitcoin regtest network magic bytes.
-    pub const REGTEST: Self = Self([0xF9, 0xBA, 0xB9, 0xD2]);
+    pub const REGTEST: Self = Self([0xd2, 0xb9, 0xba, 0xf9]);
 
     /// Create network magic from bytes.
     pub fn from_bytes(bytes: [u8; 4]) -> Magic { Magic(bytes) }
